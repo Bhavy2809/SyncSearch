@@ -1,0 +1,21 @@
+# Core dependencies
+openai-whisper==20231117
+torch==2.1.2
+torchaudio==2.1.2
+
+# Message queue
+pika==1.3.2
+
+# Database
+psycopg2-binary==2.9.9
+sqlalchemy==2.0.25
+
+# AWS SDK
+boto3==1.34.16
+
+# Utilities
+python-dotenv==1.0.0
+tqdm==4.66.1
+
+# Optional: GPU acceleration (uncomment if using CUDA)
+# nvidia-cudnn-cu11==8.9.7.29

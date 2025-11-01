@@ -1,0 +1,134 @@
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: syncsearch-postgres
+    environment:
+      POSTGRES_USER: syncsearch
+      POSTGRES_PASSWORD: devpassword
+      POSTGRES_DB: syncsearch
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U syncsearch"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # RabbitMQ Message Broker
+  rabbitmq:
+    image: rabbitmq:3.12-management-alpine
+    container_name: syncsearch-rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: syncsearch
+      RABBITMQ_DEFAULT_PASS: devpassword
+    ports:
+      - "5672:5672"   # AMQP protocol
+      - "15672:15672" # Management UI
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Minio (S3-compatible storage for local dev)
+  minio:
+    image: minio/minio:latest
+    container_name: syncsearch-minio
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    ports:
+      - "9000:9000"   # API
+      - "9001:9001"   # Console
+    volumes:
+      - minio_data:/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # API Service (NestJS)
+  api-service:
+    build:
+      context: ./api-service
+      dockerfile: Dockerfile
+    container_name: syncsearch-api
+    environment:
+      NODE_ENV: development
+      PORT: 3000
+      DATABASE_URL: postgresql://syncsearch:devpassword@postgres:5432/syncsearch
+      RABBITMQ_URL: amqp://syncsearch:devpassword@rabbitmq:5672
+      S3_ENDPOINT: http://minio:9000
+      S3_BUCKET: syncsearch-media
+      S3_ACCESS_KEY: minioadmin
+      S3_SECRET_KEY: minioadmin
+      JWT_SECRET: dev-secret-change-in-production
+    ports:
+      - "3000:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
+    volumes:
+      - ./api-service:/app
+      - /app/node_modules
+    command: npm run start:dev
+
+  # Media Worker (FFmpeg processing)
+  media-worker:
+    build:
+      context: ./media-worker
+      dockerfile: Dockerfile
+    environment:
+      NODE_ENV: development
+      DATABASE_URL: postgresql://syncsearch:devpassword@postgres:5432/syncsearch
+      RABBITMQ_URL: amqp://syncsearch:devpassword@rabbitmq:5672
+      S3_ENDPOINT: http://minio:9000
+      S3_BUCKET: syncsearch-media
+      S3_ACCESS_KEY: minioadmin
+      S3_SECRET_KEY: minioadmin
+    depends_on:
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
+    volumes:
+      - ./media-worker:/app
+      - /app/node_modules
+    command: npm run start:dev
+    deploy:
+      replicas: 2  # Run 2 workers by default
+
+  # Web App (React)
+  web-app:
+    build:
+      context: ./web-app
+      dockerfile: Dockerfile
+    container_name: syncsearch-web
+    environment:
+      REACT_APP_API_URL: http://localhost:3000
+    ports:
+      - "3001:3000"
+    depends_on:
+      - api-service
+    volumes:
+      - ./web-app:/app
+      - /app/node_modules
+    command: npm start
+
+volumes:
+  postgres_data:
+  rabbitmq_data:
+  minio_data:
