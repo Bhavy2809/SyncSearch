@@ -8,8 +8,11 @@
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.478.0",
+    "@heroicons/react": "^2.2.0",
     "amqplib": "^0.10.3",
     "axios": "^1.13.1",
-    "pg": "^8.11.3"
+    "date-fns": "^4.1.0",
+    "pg": "^8.11.3",
+    "react-dropzone": "^14.3.8"
   }
 }

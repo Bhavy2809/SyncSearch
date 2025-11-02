@@ -111,6 +111,36 @@ services:
     deploy:
       replicas: 2  # Run 2 workers by default
 
+  # Transcription Worker (Python + Whisper AI)
+  transcription-worker:
+    build:
+      context: ./transcription-worker
+      dockerfile: Dockerfile
+    environment:
+      RABBITMQ_URL: amqp://syncsearch:devpassword@rabbitmq:5672
+      S3_ENDPOINT: http://minio:9000
+      S3_BUCKET: syncsearch-media
+      S3_ACCESS_KEY: minioadmin
+      S3_SECRET_KEY: minioadmin
+      DATABASE_HOST: postgres
+      DATABASE_PORT: 5432
+      DATABASE_NAME: syncsearch
+      DATABASE_USER: syncsearch
+      DATABASE_PASSWORD: devpassword
+      WHISPER_MODEL: base
+      WHISPER_DEVICE: cpu
+    depends_on:
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
+    volumes:
+      - ./transcription-worker:/app
+    deploy:
+      replicas: 1  # Run 1 worker (Whisper is CPU/GPU intensive)
+
   # Web App (React)
   web-app:
     build:

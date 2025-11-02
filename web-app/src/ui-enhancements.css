@@ -1,0 +1,506 @@
+/* ================================================
+   SYNCSEARCH - BEAUTIFUL UI ENHANCEMENTS
+   Modern Gradient Theme with Glassmorphism
+   ================================================ */
+
+/* Enhanced CSS Variables */
+:root {
+  /* Gradient Primary Colors */
+  --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  --gradient-success: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  --gradient-warm: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+  --gradient-cool: linear-gradient(135deg, #30cfd0 0%, #330867 100%);
+  
+  /* Glass Effect */
+  --glass-bg: rgba(255, 255, 255, 0.25);
+  --glass-border: rgba(255, 255, 255, 0.18);
+  --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  
+  /* Neon Glow Effects */
+  --glow-primary: 0 0 20px rgba(102, 126, 234, 0.5);
+  --glow-accent: 0 0 20px rgba(240, 147, 251, 0.5);
+  
+  /* Enhanced Shadows */
+  --shadow-neon: 0 0 20px rgba(102, 126, 234, 0.3), 0 0 40px rgba(102, 126, 234, 0.2);
+  --shadow-float: 0 10px 30px rgba(0, 0, 0, 0.15);
+  
+  /* Scrollbar Colors */
+  --scrollbar-track: rgba(255, 255, 255, 0.05);
+  --scrollbar-thumb: rgba(102, 126, 234, 0.3);
+  --scrollbar-thumb-hover: rgba(102, 126, 234, 0.5);
+}
+
+/* ================================================
+   HIDE SCROLLBARS COMPLETELY
+   ================================================ */
+
+/* Webkit Browsers (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* Firefox */
+* {
+  scrollbar-width: none;
+}
+
+/* IE and Edge Legacy */
+* {
+  -ms-overflow-style: none;
+}
+
+/* Smooth Scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ================================================
+   BACKGROUND IMPROVEMENTS
+   ================================================ */
+
+/* Animated Gradient Background */
+body.gradient-theme {
+  background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #f5576c);
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Mesh Gradient Background */
+body.mesh-theme {
+  background: 
+    radial-gradient(at 27% 37%, hsla(215, 98%, 61%, 1) 0px, transparent 50%),
+    radial-gradient(at 97% 21%, hsla(125, 98%, 72%, 1) 0px, transparent 50%),
+    radial-gradient(at 52% 99%, hsla(354, 98%, 61%, 1) 0px, transparent 50%),
+    radial-gradient(at 10% 29%, hsla(256, 96%, 67%, 1) 0px, transparent 50%),
+    radial-gradient(at 97% 96%, hsla(38, 60%, 74%, 1) 0px, transparent 50%),
+    radial-gradient(at 33% 50%, hsla(222, 67%, 73%, 1) 0px, transparent 50%),
+    radial-gradient(at 79% 53%, hsla(343, 68%, 79%, 1) 0px, transparent 50%);
+  animation: meshMove 20s ease infinite;
+}
+
+@keyframes meshMove {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
+
+/* ================================================
+   GLASSMORPHISM CARDS
+   ================================================ */
+
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  border-radius: 16px;
+  transition: all 0.3s ease;
+}
+
+.glass-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px 0 rgba(31, 38, 135, 0.5);
+}
+
+/* Apply glass effect to project cards */
+.card.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+}
+
+/* ================================================
+   ENHANCED BUTTONS
+   ================================================ */
+
+/* Gradient Button Primary */
+.btn-gradient-primary {
+  background: var(--gradient-primary);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-gradient-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s ease;
+}
+
+.btn-gradient-primary:hover::before {
+  left: 100%;
+}
+
+.btn-gradient-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+}
+
+/* Neon Button */
+.btn-neon {
+  background: transparent;
+  color: #667eea;
+  border: 2px solid #667eea;
+  padding: 0.75rem 1.5rem;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-shadow: 0 0 10px rgba(102, 126, 234, 0.5);
+  box-shadow: 0 0 10px rgba(102, 126, 234, 0.2), inset 0 0 10px rgba(102, 126, 234, 0.1);
+}
+
+.btn-neon:hover {
+  background: rgba(102, 126, 234, 0.1);
+  box-shadow: var(--shadow-neon);
+  transform: scale(1.05);
+}
+
+/* ================================================
+   ANIMATED CARDS
+   ================================================ */
+
+.card-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+.card-tilt {
+  transition: transform 0.3s ease;
+}
+
+.card-tilt:hover {
+  transform: perspective(1000px) rotateX(5deg) rotateY(5deg) scale(1.02);
+}
+
+/* ================================================
+   ENHANCED STATUS BADGES
+   ================================================ */
+
+.badge-glow {
+  animation: glow 2s ease-in-out infinite;
+}
+
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 5px currentColor, 0 0 10px currentColor;
+  }
+  50% {
+    box-shadow: 0 0 10px currentColor, 0 0 20px currentColor, 0 0 30px currentColor;
+  }
+}
+
+/* ================================================
+   LOADING ANIMATIONS
+   ================================================ */
+
+/* Gradient Spinner */
+.spinner-gradient {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, #667eea, #764ba2, #f093fb, #f5576c, #667eea);
+  animation: spin 1s linear infinite;
+  mask: radial-gradient(circle, transparent 35%, black 36%);
+}
+
+/* Pulse Ring */
+.pulse-ring {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 4px solid #667eea;
+  animation: pulse-ring 1.5s ease-out infinite;
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.8);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+/* ================================================
+   ENHANCED DROPZONE
+   ================================================ */
+
+.dropzone-gradient {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(240, 147, 251, 0.1) 100%);
+  border: 2px dashed #667eea;
+  border-radius: 20px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.dropzone-gradient::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(from 0deg, transparent, rgba(102, 126, 234, 0.1), transparent 30%);
+  animation: rotate 4s linear infinite;
+}
+
+@keyframes rotate {
+  100% { transform: rotate(360deg); }
+}
+
+.dropzone-gradient.active {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(240, 147, 251, 0.2) 100%);
+  border-color: #764ba2;
+  transform: scale(1.02);
+  box-shadow: var(--shadow-neon);
+}
+
+/* ================================================
+   PROGRESS BARS WITH GRADIENT
+   ================================================ */
+
+.progress-gradient {
+  height: 8px;
+  background: var(--gray-200);
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-gradient-fill {
+  height: 100%;
+  background: var(--gradient-primary);
+  border-radius: 10px;
+  transition: width 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-gradient-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* ================================================
+   ENHANCED HEADER
+   ================================================ */
+
+.header-gradient {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.85) 100%);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+/* ================================================
+   MODAL ENHANCEMENTS
+   ================================================ */
+
+.modal-gradient {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.9) 100%);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-50px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ================================================
+   SCROLL ANIMATIONS
+   ================================================ */
+
+.fade-in-up {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.slide-in-right {
+  animation: slideInRight 0.5s ease-out;
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ================================================
+   HOVER EFFECTS
+   ================================================ */
+
+.hover-lift {
+  transition: all 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-float);
+}
+
+.hover-grow {
+  transition: transform 0.3s ease;
+}
+
+.hover-grow:hover {
+  transform: scale(1.05);
+}
+
+/* ================================================
+   TEXT GRADIENTS
+   ================================================ */
+
+.text-gradient {
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 700;
+}
+
+.text-gradient-warm {
+  background: var(--gradient-warm);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 700;
+}
+
+/* ================================================
+   UTILITY CLASSES
+   ================================================ */
+
+.blur-bg {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.shadow-neon {
+  box-shadow: var(--shadow-neon);
+}
+
+.shadow-float {
+  box-shadow: var(--shadow-float);
+}
+
+/* ================================================
+   RESPONSIVE ENHANCEMENTS
+   ================================================ */
+
+@media (max-width: 768px) {
+  .glass-card {
+    backdrop-filter: blur(5px);
+  }
+  
+  .btn-gradient-primary {
+    padding: 0.625rem 1.25rem;
+  }
+}
+
+/* ================================================
+   DARK MODE SUPPORT (Optional)
+   ================================================ */
+
+body.dark-mode {
+  --glass-bg: rgba(17, 25, 40, 0.75);
+  --glass-border: rgba(255, 255, 255, 0.125);
+  color: #f9fafb;
+}
+
+body.dark-mode .glass-card {
+  background: rgba(17, 25, 40, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.125);
+}
+
+/* ================================================
+   MODAL POSITIONING FIXES
+   ================================================ */
+
+/* Ensure modal backdrop centers content properly */
+.modal-backdrop {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 2rem 1rem !important;
+  overflow-y: auto;
+}
+
+/* Prevent modal from going off screen */
+.modal-content {
+  margin: auto;
+  max-height: 85vh !important;
+  overflow-y: auto;
+}
+
+/* Fix modal footer positioning */
+.modal-footer {
+  position: sticky;
+  bottom: 0;
+  background: white;
+  padding: 1rem 1.5rem;
+  border-top: 1px solid #e5e7eb;
+  z-index: 10;
+}

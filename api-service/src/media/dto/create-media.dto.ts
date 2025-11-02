@@ -11,9 +11,7 @@ export class CreateMediaDto {
   filename: string;
 
   @IsOptional()
-  @IsString()
-  @IsIn(['video/mp4', 'video/quicktime', 'video/x-msvideo', 'audio/mpeg', 'audio/wav', 'audio/mp3'])
-  mimeType?: string;
+  mimeType?: string; // Accept any MIME type (no validation)
 
   @IsOptional()
   filesize?: number;

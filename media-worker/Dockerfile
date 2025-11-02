@@ -32,4 +32,11 @@ RUN npm ci --only=production
 COPY . .
 RUN npm run build
 
+# Create temp directory for file processing
+RUN mkdir -p /app/tmp && chmod 777 /app/tmp
+
+# Run as non-root user
+RUN useradd -m -u 1001 worker && chown -R worker:worker /app
+USER worker
+
 CMD ["npm", "start"]

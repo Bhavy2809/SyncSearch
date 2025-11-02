@@ -21,6 +21,15 @@ export class MediaController {
     @CurrentUser('id') userId: string,
     @Body() createMediaDto: CreateMediaDto,
   ): Promise<UploadUrlResponseDto> {
+    console.log('🔍 Upload URL Request Received:');
+    console.log('  User ID:', userId);
+    console.log('  Body:', JSON.stringify(createMediaDto, null, 2));
+    console.log('  DTO Keys:', Object.keys(createMediaDto));
+    console.log('  Filename:', createMediaDto.filename);
+    console.log('  ProjectId:', createMediaDto.projectId);
+    console.log('  MimeType:', createMediaDto.mimeType);
+    console.log('  FileType:', (createMediaDto as any).fileType);
+    
     return this.mediaService.initializeUpload(userId, createMediaDto);
   }
 
